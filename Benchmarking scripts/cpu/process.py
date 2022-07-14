@@ -19,7 +19,7 @@ import datetime
 
 track = []
 for num_threads in tqdm(range(1, 5)):
-    for thread_size in range(32, 33, 32):
+    for thread_size in range(32, 129, 32):
         for prime_size in range(10000, 10000001, 500000):
             thread_mem_size = str(thread_size) + 'K'
 
@@ -28,8 +28,8 @@ for num_threads in tqdm(range(1, 5)):
 
             print(f'threads={str(num_threads)} --thread-stack-size={thread_mem_size} --cpu-max-prime={prime_size}')
             # os.system(perf_line + f'sysbench --threads={str(num_threads)} --events=8 --time=0 --thread-stack-size={thread_mem_size} --cpu-max-prime={prime_size} cpu run > temp_output_1')
-            os.system(f'sysbench --threads={str(num_threads)} --thread-stack-size={thread_mem_size} --cpu-max-prime={prime_size} cpu run > temp_output_1')
-            # os.system(perf_line + f'sysbench --threads={str(num_threads)} --thread-stack-size={thread_mem_size} --cpu-max-prime={prime_size} cpu run > temp_output_1')
+            # os.system(f'sysbench --threads={str(num_threads)} --thread-stack-size={thread_mem_size} --cpu-max-prime={prime_size} cpu run > temp_output_1')
+            os.system(perf_line + f'sysbench --threads={str(num_threads)} --thread-stack-size={thread_mem_size} --cpu-max-prime={prime_size} cpu run > temp_output_1')
 
             f = open("temp_output_1", "r")
             
@@ -61,7 +61,7 @@ for num_threads in tqdm(range(1, 5)):
                 if line.startswith('    execution time (avg/stddev):'):
                     avg_exec_time, stddev_exec_time = line.split(":")[1].strip().split('/')
 
-            """f = open("temp_output_2", "r")
+            f = open("temp_output_2", "r")
 
             for line in f.readlines():
                 if "bus-cycles" in line:
@@ -75,7 +75,7 @@ for num_threads in tqdm(range(1, 5)):
                 if "major-faults" in line:
                     major_faults = line.split()[0]
                 if "minor-faults" in line:
-                    minor_faults = line.split()[0]"""
+                    minor_faults = line.split()[0]
 
             temp['events_per_second'] = events_per_second
             temp['total_time'] = total_time
@@ -95,12 +95,12 @@ for num_threads in tqdm(range(1, 5)):
             temp['timestamp'] = ts
             temp['time'] = ct
 
-            """temp['bus_cycles'] = bus_cycles
+            temp['bus_cycles'] = bus_cycles
             temp['cache_misses'] = cache_misses
             temp['cache_references'] = cache_references
             temp['cpu_cycles'] = cpu_cycles
             temp['major_faults'] = major_faults
-            temp['minor_faults'] = minor_faults"""
+            temp['minor_faults'] = minor_faults
 
             track.append(temp)
 
