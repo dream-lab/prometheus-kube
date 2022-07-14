@@ -87,3 +87,24 @@ The above line will bypass the CPU uniformity check and avoid a PSOD (purple scr
     -  [USB Network Native Driver](https://flings.vmware.com/usb-network-native-driver-for-esxi)
     -  [Community Networking Driver](https://flings.vmware.com/community-networking-driver-for-esxi)
 - [Guide on creating custom ESXi bundles](https://www.virten.net/2020/04/how-to-add-the-usb-nic-fling-to-esxi-7-0-base-image/)
+
+### VM Configuration
+* Download CentOS 7 iso from [here](http://isoredirect.centos.org/centos/7/isos/x86_64/)
+* Copy the above iso file into the attached datastore
+* Create a new virtual machine from ESXi console
+* Set the Guest OS family and version to "Linux" and "Centos 7 (64-bit)" respectively
+* Select the default datastore for mounting the filestore
+* Set number of CPUs to 2 (2 per socket)
+* Under the CPU tab, check "Expose hardware assisted virtualization to the guest OS" and "Enable virtualized CPU performance counters"
+* Set scheduling affinity to cores other than 0 and 1 as most system calls are preferably sreviced by these cores. Set the field to 4,5 or 2,3.
+* Assign 4096MB of memory (uncheck dynamic memory allocation)
+* Check on "Reserve all guest memory (All locked)"
+* Change "CD/DVD Drive 1" to "Datastore ISO file". Select the iso that was previously copied (step 2)
+* Finish the VM creation process
+
+### OS Installation
+* Choose the newly installed virtual machine and install the OS
+* Set correct timezone (**very important for prometheus to sync**)
+* Set software selection to **Compute Node**
+* Disable kdump
+* Connect network to the default ethernet
