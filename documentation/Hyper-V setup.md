@@ -5,6 +5,7 @@
 * Cores: 4+
 * Memory: 8 GiB+
 * HDD: 512 GiB+
+* Hyperthreading disabled
 
 #### Installation steps
 Hyper-V is not enabled by default in recent windows builds. We need to enable it manually via powershell. Open a PowerShell console and run the following command

@@ -1,5 +1,11 @@
 # ESXi Setup
 
+#### Recommended configuration
+* Cores: 4+
+* Memory: 8 GiB+
+* HDD: 512 GiB+
+* Hyperthreading disabled
+
 ## Problem
 The server on which ESXi needed to be installed had a desktop-grade NIC and processor which is deemed incompatible with any version of ESXi. Possible approaches included waiting for vmware developers to release the official signed packages or change the NIC into a server-grade variant after bypassing CPU compatibility checks.
 
