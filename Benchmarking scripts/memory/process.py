@@ -8,7 +8,7 @@ track = []
 ompi = False
 
 for size in tqdm(range(10000000, 100000000, 1000000)):
-    for threads in range(1, 2):
+    for threads in range(1, 5):
         
         if ompi:
             os.system(f"gcc -O -fopenmp -D_OPENMP -DSTREAM_ARRAY_SIZE={size} stream.c -o stream")
@@ -36,7 +36,7 @@ for size in tqdm(range(10000000, 100000000, 1000000)):
                 clock_ticks = [int(s) for s in line.split() if s.isdigit()][0]
  
             if list(filter(line.startswith, operations)) != []:
-                temp = {"mpi" : 0, "num_threads" : 0, "array size" : 0, "array memory" : 0, "total memory" : 0, "threads requested" : 0, "threads counted" : 0, "clock ticks (ms)" : 0, "operation" : 0, "best_rate" : 0, "avg_time" : 0, "min_time" : 0, "max_time" : 0, "D1_read_miss_rate" : 0, "D1_write_miss_rate" : 0, "LL_read_miss_rate" : 0, "LL_write_miss_rate" : 0}
+                temp = {"mpi" : 0, "num_threads" : 0, "array size" : 0, "array memory" : 0, "total memory" : 0, "threads requested" : 0, "threads counted" : 0, "clock ticks (ms)" : 0, "operation" : 0, "best_rate" : 0, "avg_time" : 0, "min_time" : 0, "max_time" : 0}
                 operation, best_rate, avg_time, min_time, max_time = line.split()
  
                 temp["mpi"] = ompi
@@ -79,15 +79,6 @@ for threads in range(1, 5):
         f = open('output', 'r')
         operations = ['Copy','Scale','Add','Triad']
  
-        g = open('testing', 'r')
-        for line in g.readlines():
- 
-            if "D1  miss rate" in line:
-                D1_read_miss_rate, D1_write_miss_rate = re.findall('\((.*?)\)', line)[0].replace(' ','').split('+')
- 
-            if "LLd miss rate" in line:
-                LL_read_miss_rate, LL_write_miss_rate = re.findall('\((.*?)\)', line)[0].replace(' ','').split('+')
- 
         for line in f.readlines():
             if line.startswith('Memory per array'):
                 mem_array = re.findall('\d*\.?\d+', line)[0]
@@ -103,7 +94,7 @@ for threads in range(1, 5):
                 clock_ticks = [int(s) for s in line.split() if s.isdigit()][0]
  
             if list(filter(line.startswith, operations)) != []:
-                temp = {"mpi" : 0, "num_threads" : 0, "array size" : 0, "array memory" : 0, "total memory" : 0, "threads requested" : 0, "threads counted" : 0, "clock ticks (ms)" : 0, "operation" : 0, "best_rate" : 0, "avg_time" : 0, "min_time" : 0, "max_time" : 0, "D1_read_miss_rate" : 0, "D1_write_miss_rate" : 0, "LL_read_miss_rate" : 0, "LL_write_miss_rate" : 0}
+                temp = {"mpi" : 0, "num_threads" : 0, "array size" : 0, "array memory" : 0, "total memory" : 0, "threads requested" : 0, "threads counted" : 0, "clock ticks (ms)" : 0, "operation" : 0, "best_rate" : 0, "avg_time" : 0, "min_time" : 0, "max_time" : 0}
                 operation, best_rate, avg_time, min_time, max_time = line.split()
  
                 temp["mpi"] = ompi
