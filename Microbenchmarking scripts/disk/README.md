@@ -5,7 +5,7 @@ Disk benchmarking is brought about by iozone. It stress tests the IO bandwidth b
 ## Running guidelines
 * Install the package
     ```bash
-    cd Benchmarking scripts/disk
+    cd Microbenchmarking scripts/disk
     make
     make linux
     ```
