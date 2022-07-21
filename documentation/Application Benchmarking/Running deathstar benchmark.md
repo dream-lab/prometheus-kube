@@ -11,7 +11,7 @@ Now clone the Deathstar benchmark github repo
     
 Create the local images using:
 
-    sudo bash <path-of-DeathStarBench>/hotelReservation/kubernetes/scripts/build-docekr-images.sh
+    sudo bash <path-of-DeathStarBench>/hotelReservation/kubernetes/scripts/build-docker-images.sh
     
 Now deploy services using
     
