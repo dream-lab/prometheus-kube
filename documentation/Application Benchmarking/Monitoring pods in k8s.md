@@ -65,8 +65,8 @@ Now apply following commands to setup cadvisor on all worker nodes:
     
     VERSION=v0.42.0
     cd deploy/kubernetes/base && kustomize edit set image gcr.io/cadvisor/cadvisor:${VERSION} && cd ../../..
-    kubectl kustomize deploy/kubernetes/overlays/examples
-    kubectl kustomize deploy/kubernetes/overlays/examples | kubectl apply -f -
+    kubectl kustomize deploy/kubernetes/overlays/examples_perf
+    kubectl kustomize deploy/kubernetes/overlays/examples_perf | kubectl apply -f -
 
 Check status of pods using:
 
