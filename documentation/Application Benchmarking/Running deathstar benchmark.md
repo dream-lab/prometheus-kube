@@ -3,7 +3,7 @@
 First install luarocks and luasockets:
     
     apt-get install luarocks
-    uarocks install luasocket
+    luarocks install luasocket
     
 Now clone the Deathstar benchmark github repo
 
