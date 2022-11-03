@@ -42,6 +42,10 @@ Next install kustomize using GO source.
 
     ~/go/bin/kustomize version
 
+Alternatively use:
+
+    curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+
 
 Now clone cadvisor repo and enter kubernetes directory:
 
