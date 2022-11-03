@@ -16,6 +16,15 @@ Run the below steps on the control plane to deploy kube-state-metrics as NodePor
 To check if its up and running, check status from:
     
     kubectl get pods -n kube-system 
+
+Once ready, add it as a job to the prometheus yaml file as follows:
+
+      - job_name: 'kube-state-metrics'
+        honor_timestamps: true
+        scrape_interval: 5s
+        scrape_timeout: 5s
+        static_configs:
+          - targets: ['192.168.0.47:30008']
    
 
 ## cAdvisor
