@@ -6,7 +6,7 @@ The two important modules to get pod level metrics exported into prometheus data
 
 We need to setup each of these services on the worker nodes to get info of all the pods running on them.
 
-## Kube-state-metrics setup (optional)
+## Kube-state-metrics setup (Important)
 
 Run the below steps on the control plane to deploy kube-state-metrics as NodePort service (to make service discoverable outside the cluster):
   
@@ -93,4 +93,4 @@ Once all pods are running open the the prometheus.yaml config file and add job c
         labels:
            alias: 'cadvisor'
    ````
-Lastly inside grafana add a newdashboard by going into 'Import' followed by new dashboard then upload the json file or copy the contents from the json file in the binaries repo.
+Lastly inside grafana add a newdashboard by going into 'Import' followed by new dashboard then upload the json file or copy the contents from the json file in the binaries repo. Replace the datasource and uid values with your unique values (Can extract it from json model of Node exporter dashboard.Do a find and replace of values)
