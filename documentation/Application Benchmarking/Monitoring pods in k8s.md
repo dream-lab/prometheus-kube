@@ -46,6 +46,10 @@ Alternatively use:
 
     curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
 
+or
+
+    sudo snap install kustomize
+
 
 Now clone cadvisor repo and enter kubernetes directory:
 
