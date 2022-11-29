@@ -58,6 +58,7 @@ Alternatively use:
 
 or
 
+    sudo apt install snapd
     sudo snap install kustomize
 
 
