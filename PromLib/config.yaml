@@ -1,0 +1,14 @@
+prometheus_source: "10.24.24.14:9090"
+
+machine_window: "10m"
+
+app_scrape_interval: "5s"
+
+application_window: "10m"
+
+app_metric_percentile: "0.95"
+
+k8s_control_plane: "10.24.24.130"
+
+solver_source: "10.16.70.242:8000"
+
