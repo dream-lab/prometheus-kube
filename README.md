@@ -1,5 +1,5 @@
 ## Setup Instructions
-This repository houses the steps to mimic the experimental setup used for application benchmarking and microbenchmarking various deployment platforms.
+This repository houses the steps to mimic the experimental setup used for application benchmarking and microbenchmarking various deployment platforms and the VM placement algorithm that leverages PromLib library.
 
 </br>
 
