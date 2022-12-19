@@ -1,5 +1,7 @@
 # PromLib
 
+Promlib is a library that helps pull metrics for machines/VMs at different granularities and the same for kubernetes based applications.
+
 
 The promlib module has the following functions which provide the following results:
 
