@@ -26,3 +26,4 @@ root
 *   `documentation/Microbenchmarking` folder has instructions for setting up the individual servers (bare metal, hypervisor and VMs).
 *   The `binaries` folder holds the necessary binary packages (prometheus, exporters, grafana, etc.) with the version that best works with the recommended setup.
 *   `Microbenchmarking/scripts` holds instructions for running microbenchmarks on a per-resource fashion and has individual README files for detailed execution steps.
+*   [Installation guidelines](packing_api/README.md) has instructions for setting up the Solver in the above environment, which will then generate placement recommendations on the fly

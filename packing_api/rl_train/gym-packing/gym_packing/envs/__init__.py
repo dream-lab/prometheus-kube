@@ -1,0 +1,1 @@
+from gym_packing.envs.packing_env import VMPackingEnv

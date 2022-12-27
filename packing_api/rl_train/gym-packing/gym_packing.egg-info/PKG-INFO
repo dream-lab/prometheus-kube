@@ -1,0 +1,17 @@
+Metadata-Version: 2.1
+Name: gym-packing
+Version: 0.21.0
+Summary: Gym environment for 4D VM Packing
+Home-page: UNKNOWN
+Author: Prathamesh Saraf
+License: MIT
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Requires-Python: >=3.7
+
+UNKNOWN
+
