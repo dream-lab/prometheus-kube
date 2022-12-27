@@ -1,0 +1,8 @@
+README.md
+setup.py
+gym_packing.egg-info/PKG-INFO
+gym_packing.egg-info/SOURCES.txt
+gym_packing.egg-info/dependency_links.txt
+gym_packing.egg-info/not-zip-safe
+gym_packing.egg-info/requires.txt
+gym_packing.egg-info/top_level.txt
