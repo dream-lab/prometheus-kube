@@ -7,7 +7,7 @@ import gym_packing
 from sb3_contrib.common.wrappers import ActionMasker
 from sb3_contrib.ppo_mask import MaskablePPO
 
-PATH = "packing_api/models/best_model.zip"
+PATH = "rl_train/models/best_model.zip"
 
 
 def get_capacity_and_max():
@@ -25,7 +25,24 @@ def mask_fn(env: gym.Env) -> np.ndarray:
         # Use this function to return the action masks
         return env.valid_action_mask()
 
-env = gym.make('vm-packing-v0',)
+cap, max_vals = get_capacity_and_max()
+
+# env_config = {
+#             'step_limit' : np.size(containers, 0),
+#             'n_pms' : np.size(machines, 0),
+#             'machines' : copy.deepcopy(machines[:,1:]),
+#             'max_vals' : copy.deepcopy(machines[:,1:].max(axis = 0)),
+#             'containers' : copy.deepcopy(containers[:, 2:-1]),
+#         }
+
+env_config = {
+    'machines' : cap,
+    'max_vals' : max_vals,
+    'n_pms' : np.size(cap, 0),
+    'step_limit' : 500,
+}
+
+env = gym.make('vm-packing-v0', env_config=env_config)
 env = ActionMasker(env, mask_fn)  # Wrap to enable masking
 path = PATH
 model = MaskablePPO.load(path, env=env)
@@ -60,16 +77,16 @@ def normalize_data(self, data, max_vals, type='machines'):
 
 def rl_pack(machines, mid_list, containers, cid_list):
     
-    cap, max_vals = get_capacity_and_max()
     demands = normalize_data(containers, type='containers')
     action_dict = {}
 
-    for idx, container in enumerate(containers):
+    for idx, container in enumerate(demands):
         cnt_idx = container[0].astype(int)
         
         machines_avail = normalize_data([machines, cap], max_vals, type='machines')
         request_norm = demands[idx]
         
+        print("PRINT",machines_avail.shape, request_norm.shape)
         obs = np.vstack(
             [
                 machines_avail, # pm_on/off, cpu, mem, disk, net
