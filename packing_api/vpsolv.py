@@ -67,7 +67,7 @@ def VpSolver(machines, mid_list, containers, cid_list):
             data['bin_capacities'], data['cost'], data['num_bins'],
             data['item_capacities'], data['demand'],
             script=optimizer,
-            verbose=True,
+            verbose=False,
             script_options="Threads=8",    
             )
             
