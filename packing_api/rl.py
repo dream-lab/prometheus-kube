@@ -11,7 +11,8 @@ PATH = "rl_train/models/best_model.zip"
 
 
 def get_capacity_and_max():
-    """WRITE CUSTOM CODE HERE THAT GIVES YOU CAPACITY OF ALL VMS and MAX ACROSS EACH DIMENSION"""
+    """WRITE CUSTOM CODE HERE THAT GIVES YOU CAPACITY OF ALL VMS and MAX ACROSS EACH DIMENSION
+    MUST MATCH WITH HOST SPECS CALLED FROM API"""
     cap = np.array([
         [7,13,42,89],
         [7,13,42,89],
@@ -59,14 +60,14 @@ def group_containers(a):
     x = x.astype(int)
     return x
 
-def normalize_data(self, data, max_vals, type='machines'):
+def normalize_data(data, max_vals, type='machines'):
 
     if type == 'machines':
         machines = data[0].astype(int)
         machines_cap = data[1].astype(int)
         mask = np.any(machines != machines_cap, 1)
 
-        machines_norm = machines[:,1:] / max_vals
+        machines_norm = machines / max_vals
         machines_norm = np.c_[mask.reshape(-1,1), machines_norm]
         return machines_norm
 
@@ -77,16 +78,16 @@ def normalize_data(self, data, max_vals, type='machines'):
 
 def rl_pack(machines, mid_list, containers, cid_list):
     
-    demands = normalize_data(containers, type='containers')
+    demands = normalize_data(containers, max_vals, type='containers')
     action_dict = {}
 
-    for idx, container in enumerate(demands):
-        cnt_idx = container[0].astype(int)
+    for cnt_idx, container in enumerate(demands):
+        # cnt_idx = container[0].astype(int)
         
         machines_avail = normalize_data([machines, cap], max_vals, type='machines')
-        request_norm = demands[idx]
+        request_norm = demands[cnt_idx]
         
-        print("PRINT",machines_avail.shape, request_norm.shape)
+        # print("PRINT",machines_avail.shape, request_norm.shape)
         obs = np.vstack(
             [
                 machines_avail, # pm_on/off, cpu, mem, disk, net
@@ -100,17 +101,13 @@ def rl_pack(machines, mid_list, containers, cid_list):
         # Predicitons: action and next hidden state to be used in recurrent policies
         m_idx, _next_hidden_state = model.predict(obs, action_masks=action_masks)
         m_idx = int(m_idx)
-        if np.sum(machines[m_idx] >= container) == 4:
-            machines[m_idx] -= container
+        if np.sum(machines[m_idx] >= containers[cnt_idx]) == 4:
+            machines[m_idx] -= containers[cnt_idx]
             m_id = mid_list[m_idx]
-            c_id = cid_list[idx]
+            c_id = cid_list[cnt_idx]
             action_dict[c_id] = m_id 
+        else:
+            return {'ERROR' : 'RL cannot fit for given placement'}
 
-    
     return action_dict
-        
-
-
-
-
 
