@@ -24,6 +24,7 @@ description = """
 This API helps you get intelligent placement decisions using various placement algorithms. 🚀
 Currently Supported Algorithms:
 * VpSolver
+* PPO+A2C based RL
 """
 
 tags_metadata = [
@@ -37,8 +38,8 @@ tags_metadata = [
 
     },
     {
-        "name": "get_placement_ml",
-        "description": "API to get placement mappings using _ML_."
+        "name": "get_placement_rl",
+        "description": "API to get placement mappings using _RL_."
 
     },
 ]
@@ -141,8 +142,61 @@ def get_placement_vp(app_list: list = Query(default=[])):
     return {'mappings' : reverse_mappings, 'command': '\n'.join(logs)}
 
 
-@app.get('/get_placement_rl', tags=["get_placement_ml"])
-def get_placement_vp(app_list: list = Query(default=[])):
+@app.get('/get_placement_vp_static', tags=["get_placement_vp"])
+def get_placement_vp_static(app_list: list = Query(default=[])):
+
+    '''
+        This API gives placement using **VPSolver** algorithm.
+
+        - **Input:** List of app ids
+        - **Output:** Generated mappings between apps and hosts 
+        
+        ### BOILER PLATE CODE TO USE THE API ###
+
+        ```
+            # Assumed application ids to be placed
+            apps_list = ['app1', 'app2', 'app3'] 
+
+            query_apps = []
+            for app in apps_list:
+                query_apps.append('app_list='+app)
+
+            query = "&".join([qapp for qapp in query_apps])
+
+            url = 'http://x.x.x.x:port/get_placement_vp?'+query
+            response = requests.get(url).json()
+
+            print(response)
+
+        ```
+    '''
+
+
+
+    machine_avail = np.array([
+        [7,13,42,89],
+        [7,13,42,89],
+        [6,13,55,8998],
+    ])
+    hosts = ['m1', 'm2', 'm3']
+    containers = np.array([
+        [1,2,5,10],
+        [1,1,2,2],
+        [2,4,8,5],
+        [1,2,4,8],
+        [1,4,5,10],
+        [2,4,2,8],
+    ])
+    app_list = ['c1', 'c2', 'c3', 'c4','c5','c6']
+    
+    # Mapping is a dictionary
+    mappings = VpSolver(machine_avail, hosts, containers, app_list)
+    
+    return {'mappings' : mappings}
+
+
+@app.get('/get_placement_rl', tags=["get_placement_rl"])
+def get_placement_rl(app_list: list = Query(default=[])):
 
     '''
         This API gives placement using **RL** algorithm.
@@ -218,3 +272,52 @@ def get_placement_vp(app_list: list = Query(default=[])):
     
     return {'mappings' : reverse_mappings, 'command': '\n'.join(logs)}
 
+
+@app.get('/get_placement_rl_static', tags=["get_placement_rl"])
+def get_placement_rl_static(app_list: list = Query(default=[])):
+
+    '''
+        This API gives placement using **RL** algorithm.
+
+        - **Input:** List of app ids
+        - **Output:** Generated mappings between apps and hosts 
+        
+        ### BOILER PLATE CODE TO USE THE API ###
+
+        ```
+            # Assumed application ids to be placed
+            apps_list = ['app1', 'app2', 'app3'] 
+
+            query_apps = []
+            for app in apps_list:
+                query_apps.append('app_list='+app)
+
+            query = "&".join([qapp for qapp in query_apps])
+
+            url = 'http://x.x.x.x:port/get_placement_vp?'+query
+            response = requests.get(url).json()
+
+            print(response)
+
+        ```
+    '''
+    machine_avail = np.array([
+        [7,13,42,89],
+        [7,13,42,89],
+        [6,13,55,8998],
+    ])
+    hosts = ['m1', 'm2', 'm3']
+    containers = np.array([
+        [1,2,5,10],
+        [1,1,2,2],
+        [2,4,8,5],
+        [1,2,4,8],
+        [1,4,5,10],
+        [2,4,2,8],
+    ])
+    app_list = ['c1', 'c2', 'c3', 'c4','c5','c6']
+
+    # Mapping is a dictionary
+    mappings = rl_pack(machine_avail, hosts, containers, app_list)
+    
+    return {'mappings' : mappings}
