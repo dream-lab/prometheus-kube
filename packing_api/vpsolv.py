@@ -90,7 +90,7 @@ def VpSolver(machines, mid_list, containers, cid_list):
 
             for i in range(multiplier):
 
-                schedule_mc_name = data['mids'][x][0]
+                schedule_mc_name = data['mids'][x][mc_idx]
 
                 
                 for it, opt in pattern:
